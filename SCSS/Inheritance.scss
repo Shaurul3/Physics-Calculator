@@ -1,0 +1,41 @@
+%buttonprop
+{
+    border-radius: 4px;
+    border: none;
+    color: black;
+    text-align: center;
+    font-size: 48px;
+    padding: 20px;
+    /*width: 350px;
+      height: 175px;*/
+    flex: 25%;
+    width:100%;
+    /*display:inline-block;*/
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    color: purple;
+    font-weight: bold;
+    -webkit-text-stroke: 1px yellow;
+    border-radius: 20px;
+}
+
+.buttonMecanica{
+    @extend %buttonprop;
+    background-image: url("../Poze\ butoane/Mecanica.png");
+}
+
+.buttonElectricitate{
+    @extend %buttonprop;
+    background-image: url("../Poze\ butoane/Electricitate.jpg");
+}
+
+.buttonTermodinamica{
+    @extend %buttonprop;
+    background-image: url("../Poze\ butoane/Termodinamica.jpg");
+}
+
+.buttonOptica{
+    @extend %buttonprop;
+    background-image: url("../Poze\ butoane/Optica.jpg");
+}

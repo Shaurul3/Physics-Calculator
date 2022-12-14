@@ -1,74 +1,78 @@
-body{
+body {
   background-image: url("../Background.jpg");
   /*background:linear-gradient(to bottom right, purple,yellow) no-repeat;
   height: 100%;*/
-  overflow: hidden;
+  /*overflow: hidden*/;
 }
 
 /*Buton Mecanica*/
-.buttonMecanica {
-    border-radius: 4px;
-    border: none;
-    color: black;
-    text-align: center;
-    font-size: 47px;
-    padding: 20px;
-    width: 450px;
-    height: 225px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-    background-image: url(../Poze\ butoane/Mecanica.png);
-    color:purple;
-    font-weight: bold;
-    -webkit-text-stroke: 1px yellow;
-   border-radius: 20px;
- }
-  
-  .buttonMecanica span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-  
-  .buttonMecanica span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-  }
-  
-  .buttonMecanica:hover span {
-    padding-right: 25px;
-  }
-  
-  .buttonMecanica:hover span:after {
-    opacity: 1;
-    right: 0;
-  }
-
-/*Buton Electricitate*/
-.buttonElectricitate {
+/* .buttonMecanica {
   border-radius: 4px;
   border: none;
   color: black;
   text-align: center;
-  font-size: 47px;
+  font-size: 48px;
   padding: 20px;
-  width: 450px;
-  height: 225px;
+  /*width: 350px;
+    height: 175px;*/
+  /* flex: 25%;
+  width:100%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  background-image: url("../Poze\ butoane/Mecanica.png");
+  color: purple;
+  font-weight: bold;
+  -webkit-text-stroke: 1px yellow;
+  border-radius: 20px;
+} */
+
+.buttonMecanica span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.buttonMecanica span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.buttonMecanica:hover span {
+  padding-right: 25px;
+}
+
+.buttonMecanica:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/*Buton Electricitate*/
+/* .buttonElectricitate {
+  border-radius: 4px;
+  border: none;
+  color: black;
+  text-align: center;
+  font-size: 48px;
+  padding: 20px; */
+  /*width: 350px;
+  height: 175px;*/
+  /* flex: 25%;
+  width:100%;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
   background-image: url("../Poze\ butoane/Electricitate.jpg");
-  color:purple;
+  color: purple;
   font-weight: bold;
   -webkit-text-stroke: 1px yellow;
   border-radius: 20px;
-}
+} */
 
 .buttonElectricitate span {
   cursor: pointer;
@@ -96,24 +100,26 @@ body{
 }
 
 /*Buton Termodinamica*/
-.buttonTermodinamica {
+/* .buttonTermodinamica {
   border-radius: 4px;
   border: none;
   color: black;
   text-align: center;
-  font-size: 47px;
-  padding: 20px;
-  width: 450px;
-  height: 225px;
+  font-size: 48px;
+  padding: 20px; */
+  /*width: 350px;
+  height: 175px;*/
+  /* flex: 25%;
+  width:100%;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
   background-image: url("../Poze\ butoane/Termodinamica.jpg");
-  color:purple;
+  color: purple;
   font-weight: bold;
   -webkit-text-stroke: 1px yellow;
   border-radius: 20px;
-}
+} */
 
 .buttonTermodinamica span {
   cursor: pointer;
@@ -141,24 +147,26 @@ body{
 }
 
 /*Buton Optica*/
-.buttonOptica {
+/* .buttonOptica {
   border-radius: 4px;
   border: none;
   color: black;
   text-align: center;
-  font-size: 47px;
-  padding: 20px;
-  width: 450px;
-  height: 225px;
+  font-size: 48px;
+  padding: 20px; */
+  /*width: 350px;
+  height: 175px;*/
+  /* flex: 25%;
+  width:100%;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
   background-image: url("../Poze\ butoane/Optica.jpg");
-  color:purple;
+  color: purple;
   font-weight: bold;
   -webkit-text-stroke: 1px yellow;
   border-radius: 20px;
-}
+} */
 
 .buttonOptica span {
   cursor: pointer;
@@ -188,24 +196,32 @@ body{
 /*Final Butoane*/
 /**/
 
-  .container {
-    height: 100%;
-    margin: 0px;
-  height: 100vh;
-  }
-  
-  .center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
+/*Ce e sub header*/
+.container {
+  height: 100%;
+  margin: 0px;
+  height: 80vh;
+}
 
-  * {box-sizing: border-box;}
+/*Cutia de centrare a butoanelor*/
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
 
-body { 
+* {
+  box-sizing: border-box;
+}
+
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -222,7 +238,7 @@ body {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
 }
@@ -252,8 +268,42 @@ body {
     display: block;
     text-align: left;
   }
-  
+
   .header-right {
     float: none;
+  }
 }
+
+/*SMALL RESOLUTION*/
+@media screen and (max-width: 540px){
+  .col-sm {
+    flex:90%;
+    width: 75%;
+    display: block;
+  }
 }
+
+/*MEDIUM RESOLUTION*/
+@media screen and (max-width: 720px){
+  .col-md {
+    width: 100%;
+    flex: 50%;
+    display: block;
+  }
+}
+
+/*LARGE RESOLUTION*/
+@media screen and (max-width: 960px){
+  .col-lg {
+    flex: 25%;
+    width: 100%;
+  }
+}
+
+/*EXTRA LARGE RESOLUTION8*/
+/*@media screen and (max-width: 1140px){
+  .col-xl {
+    width: 12.5%;
+    flex: 12.5%;
+  }
+}*/

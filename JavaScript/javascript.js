@@ -1,10 +1,14 @@
+// document.querySelector('#vitezaFormular').addEventListener('submit', () => {
+//     // ce se itanmpla cand faci sumbtit la formularul de viteza (calcule, etc...)
+// })
+
 function formulavitezei() {
     var str = document.getElementById("distantaparcursa").value;
     var str1 = document.getElementById("timpcorp").value;
     var str2 = document.getElementById("vitezacorp").value;
 
     if (str == null || str == "") {
-        str = str1 * str2;
+        str = str1 * str2;``
         $("#rezultat").text("Distanța este: " + str +  " m");
     } else if (str1 == null || str1 == "") {
         str1 = str / str2;
