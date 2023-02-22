@@ -8,7 +8,7 @@ function formulavitezei() {
     var str2 = document.getElementById("vitezacorp").value;
 
     if (str == null || str == "") {
-        str = str1 * str2;``
+        str = str1 * str2;
         $("#rezultat").text("Distanța este: " + str +  " m");
     } else if (str1 == null || str1 == "") {
         str1 = str / str2;
