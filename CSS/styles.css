@@ -8,6 +8,11 @@ body {
   box-sizing: border-box;
 }
 
+br {
+  display: block;
+  content: "";
+}
+
 /*HEADER*/
 
 .header {
@@ -56,6 +61,11 @@ body {
   .header-right {
     float: none;
   }
+
+  .container
+  {
+    margin-top: 7em;
+  }
 }
 
 /*END HEADER*/
@@ -92,6 +102,8 @@ a.button1 {
   line-height: 1.2;
   border-radius: 4px;
   margin: 10px;
+  border-style: solid;
+  border-color: black;
 }
 
 a.button1:hover {
@@ -99,7 +111,7 @@ a.button1:hover {
   color: black;
 }
 
-@media all and (max-width:500px) {
+@media all and (max-width:991px) {
   a.button1 {
     float: none;
     display: block;

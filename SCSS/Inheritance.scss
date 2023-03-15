@@ -7,9 +7,10 @@
     font-size: 48px;
     padding: 20px;
     /*width: 350px;
-      height: 175px;*/
-    flex: 25%;
-    width:100%;
+      height: 175px;*/ 
+    flex:25%;
+    width: 200px;
+    box-sizing: border-box;
     /*display:inline-block;*/
     transition: all 0.5s;
     cursor: pointer;
@@ -38,4 +39,12 @@
 .buttonOptica{
     @extend %buttonprop;
     background-image: url("../Poze\ butoane/Optica.jpg");
+}
+
+@media (max-width: 767px) {
+    %buttonprop {
+        width: 150px;
+        font-size: 32px;
+        padding: 10px;
+    }
 }
