@@ -8,10 +8,10 @@ body {
   box-sizing: border-box;
 }
 
-br {
+/* br {
   display: block;
   content: "";
-}
+} */
 
 /*HEADER*/
 
@@ -22,6 +22,7 @@ br {
   position: fixed;
   left: 0;
   right: 0;
+  z-index: 1; /* set a higher z-index to keep the header on top */
 }
 
 .header a {
@@ -64,16 +65,12 @@ br {
   .header-right {
     float: none;
   }
-
-  .container
-  {
-    margin-top: 7em;
-  }
 }
+
 
 /*END HEADER*/
 
-/*Ce e sub header*/
+/*CONTAINER*/
 .container {
   position: absolute;
   top: 50%;
@@ -82,9 +79,17 @@ br {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 0;
 }
 
-/*Cutia de centrare a butoanelor*/
+@media screen and (max-width: 500px) {
+  .container {
+    margin-top: calc(30vh - 50%);
+    padding-top: 50px;
+  }
+}
+
+/*CUTIA DE CENTRARE A BUTOANELOR*/
 .center {
   position: absolute;
   top: 50%;
@@ -93,6 +98,7 @@ br {
   margin: auto;
   background-color: white;
 }
+
 
 /*Butone*/
 a.button1 {
