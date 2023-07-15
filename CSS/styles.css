@@ -19,13 +19,9 @@ body {
   overflow: hidden;
   background-color: #f1f1f1;
   padding: 20px 10px;
-<<<<<<< HEAD
   position: fixed;
   left: 0;
   right: 0;
-  z-index: 1; /* set a higher z-index to keep the header on top */
-=======
->>>>>>> parent of 9a4db26 (Update styles.css)
 }
 
 .header a {
