@@ -1,12 +1,12 @@
 body {
   background-image: url("../Background.jpg");
-  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
 }
 
-* {
+ /* * {
   box-sizing: border-box;
-}
+}  */
 
 /* br {
   display: block;
@@ -15,7 +15,7 @@ body {
 
 /*HEADER*/
 
-.header {
+/* .header {
   overflow: hidden;
   background-color: #f1f1f1;
   padding: 20px 10px;
@@ -64,13 +64,14 @@ body {
   .header-right {
     float: none;
   }
-}
+} */
 
 
 /*END HEADER*/
 
 /*CONTAINER*/
-.container {
+.container{height: 100%;}
+/* .container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -86,7 +87,7 @@ body {
     margin-top: calc(30vh - 50%);
     padding-top: 50px;
   }
-}
+} */
 
 /*CUTIA DE CENTRARE A BUTOANELOR*/
 .center {
