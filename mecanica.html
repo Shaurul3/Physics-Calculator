@@ -24,7 +24,7 @@
 
 <body>
 
-<!-- <div class="header">
+	<!-- <div class="header">
 		<a href="../home.html" class="logo">Physics Calculator</a>
 		<div class="header-right">
 			<a class="active" href="../home.html">Home</a>
@@ -34,7 +34,7 @@
 	</div> -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#" style="font-size: 30px;">Physics Calculator</a>
+			<a class="navbar-brand" href="../home.html" style="font-size: 30px;">Physics Calculator</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -51,10 +51,10 @@
 							Capitole
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">Mecanică</a></li>
-							<li><a class="dropdown-item" href="#">Electricitate</a></li>
-							<li><a class="dropdown-item" href="#">Termodinamică</a></li>
-							<li><a class="dropdown-item" href="#">Optică</a></li>
+							<li><a class="dropdown-item" href="Mecanica.html">Mecanică</a></li>
+							<li><a class="dropdown-item" href="Electricitate.html">Electricitate</a></li>
+							<li><a class="dropdown-item" href="Termodinamica.html">Termodinamică</a></li>
+							<li><a class="dropdown-item" href="Optica.html">Optică</a></li>
 							<!-- <li><hr class="dropdown-divider"></li>
 				  <li><a class="dropdown-item" href="#">Something else here</a></li>-->
 						</ul>
@@ -74,16 +74,101 @@
 		</div>
 	</nav>
 
-	<div class="container">
-			<a href="mecanica.html" class="button1">Legea vitezei</a>
-			<a href="Electricitate.html" class="button1">Densitatea</a>
-			<a href="Termodinamica.html" class="button1">Greutatea</a>
-			<br>
-			<a href="Termodinamica.html" class="button1">Forta de frecare</a>
-			<a href="optica.html" class="button1">Forta elastica</a>
-			<a href="Termodinamica.html" class="button1">Termodinamică</a>
-	</div>
+	<div class="container d-flex align-items-center justify-content-center">
+		<div class="row " style="background-color:#ffffff;">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="mecanica-tab" data-bs-toggle="tab" data-bs-target="#mecanica" type="button"
+					role="tab" aria-controls="mecanica" aria-selected="true">Legea vitezei</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="densitate-tab" data-bs-toggle="tab" data-bs-target="#densitate"
+					type="button" role="tab" aria-controls="densitate" aria-selected="false">Densitatea</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="greutate-tab" data-bs-toggle="tab" data-bs-target="#greutate" type="button"
+					role="tab" aria-controls="greutate" aria-selected="false">Greutatea</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="fortaFrecare-tab" data-bs-toggle="tab" data-bs-target="#fortaFrecare"
+					type="button" role="tab" aria-controls="fortafrecare" aria-selected="false">Forta de
+					frecare</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="fortaElastica-tab" data-bs-toggle="tab" data-bs-target="#fortaElastica"
+					type="button" role="tab" aria-controls="fortaelastica" aria-selected="false">Forta
+					elastica</button>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade" id="mecanica" role="tabpanel" aria-labelledby="mecanica-tab">
 
+				<h3>Legea vitezei v = &Delta;d / &Delta;t</h3>
+
+				Viteza: <input id="vitezacorp"> m/s <br>
+				Distanța: <input id="distantaparcursa"> m<br>
+				Timp: <input id="timpcorp"> s
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+				<h3>t</h3>
+
+			</div>
+			<div class="tab-pane fade" id="densitate" role="tabpanel" aria-labelledby="densitate-tab">
+
+				<h3>Densitatea &rho; = m / V</h3>
+
+				Densitatea: <input id="densitateacorpului"> Kg/m<sup>3</sup> <br>
+				Masa: <input id="masacorp"> Kg<br>
+				Volumul: <input id="volumcorp"> m<sup>3</sup> (1000L)
+
+			</div>
+			<div class="tab-pane fade" id="greutate" role="tabpanel" aria-labelledby="greutate-tab">
+
+				<h3>Greutatea G = m / g</h3>
+
+				Greutatatea: <input id="greutatateacorpului"> N <br>
+				Masa: <input id="masaG"> Kg <br>
+				Accelerația gravitatională: <input id="accgravitationala"> m/s<sup>2</sup>
+
+			</div>
+			<div class="tab-pane fade" id="fortaFrecare" role="tabpanel" aria-labelledby="fortaFrecare-tab">
+
+				<h3>Forța de frecare F<sub>f</sub> = &mu; * N</h3>
+
+				Forța de frecare: <input id="ffcorp"> N <br>
+				Normala la suprafata: <input id="normalaF"> N <br>
+				Coeficientul de frecare: <input id="cfcorp">
+
+			</div>
+			<div class="tab-pane fade" id="fortaElastica" role="tabpanel" aria-labelledby="fortaElastica-tab">
+
+				<h3>Forța elastică F<sub>e</sub> = -k * &Delta;l</h3>
+
+				Forța elastică: <input id="Fe"> N <br>
+				Alungirea barei: <input id="deltal"> m <br>
+				Constanta elastică: <input id="k"> N/m
+
+			</div>
+		</div>
+	</div>
+	</div>
 </body>
 
 </html>
