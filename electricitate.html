@@ -74,104 +74,112 @@
 		</div>
 	</nav>
 
-	<div class="container-lg position-absolute top-50 start-50 translate-middle" style="background-color: white;">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="formulaIntensitate-tab" data-bs-toggle="tab" data-bs-target="#formulaIntensitate"
-					type="button" role="tab" aria-controls="formulaIntensitate" aria-selected="true">Formula intensitatii</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="sarcinaElectrica-tab" data-bs-toggle="tab" data-bs-target="#sarcinaElectrica" type="button"
-					role="tab" aria-controls="sarcinaElectrica" aria-selected="false">Sarcina electrica</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="OhmPortiune-tab" data-bs-toggle="tab" data-bs-target="#OhmPortiune" type="button"
-					role="tab" aria-controls="OhmPortiune" aria-selected="false">Legea lui Ohm pe o portiune de circuit</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="scurtcircuit" data-bs-toggle="tab" data-bs-target="#scurtcircuit" type="button"
-					role="tab" aria-controls="scurtcircuit" aria-selected="false">Intensitatea de scurtcircuit</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="putereaElectrica-tab" data-bs-toggle="tab" data-bs-target="#putereaElectrica" type="button"
-					role="tab" aria-controls="putereaElectrica" aria-selected="false">Puterea Electrica</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="putereaTotala-tab" data-bs-toggle="tab" data-bs-target="#putereaTotala" type="button"
-					role="tab" aria-controls="putereaTotala" aria-selected="false">Puterea Totala</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="randament-tab" data-bs-toggle="tab" data-bs-target="#randament" type="button"
-					role="tab" aria-controls="randament" aria-selected="false">Randament</button>
-			</li>
-		</ul>
-		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade" id="formulaIntensitate" role="tabpanel" aria-labelledby="formulaIntensitate-tab">
+	<div class="container-lg d-flex align-items-center justify-content-center">
+		<div class="row " style="background-color:#ffffff;">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="formulaIntensitate-tab" data-bs-toggle="tab"
+						data-bs-target="#formulaIntensitate" type="button" role="tab" aria-controls="formulaIntensitate"
+						aria-selected="true">Formula intensitatii</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="sarcinaElectrica-tab" data-bs-toggle="tab"
+						data-bs-target="#sarcinaElectrica" type="button" role="tab" aria-controls="sarcinaElectrica"
+						aria-selected="false">Sarcina electrica</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="OhmPortiune-tab" data-bs-toggle="tab" data-bs-target="#OhmPortiune"
+						type="button" role="tab" aria-controls="OhmPortiune" aria-selected="false">Legea lui Ohm pe o
+						portiune de circuit</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="scurtcircuit" data-bs-toggle="tab" data-bs-target="#scurtcircuit"
+						type="button" role="tab" aria-controls="scurtcircuit" aria-selected="false">Intensitatea de
+						scurtcircuit</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="putereaElectrica-tab" data-bs-toggle="tab"
+						data-bs-target="#putereaElectrica" type="button" role="tab" aria-controls="putereaElectrica"
+						aria-selected="false">Puterea Electrica</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="putereaTotala-tab" data-bs-toggle="tab" data-bs-target="#putereaTotala"
+						type="button" role="tab" aria-controls="putereaTotala" aria-selected="false">Puterea
+						Totala</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="randament-tab" data-bs-toggle="tab" data-bs-target="#randament"
+						type="button" role="tab" aria-controls="randament" aria-selected="false">Randament</button>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="formulaIntensitate" role="tabpanel"
+					aria-labelledby="formulaIntensitate-tab">
 
-				<h3>Formula intensității I = Q / &Delta;t</h3>
+					<h3>Formula intensității I = Q / &Delta;t</h3>
 
-				Intensitate: <input id="intensitate"> A <br>
-				Sarcina electrică: <input id="Q"> C <br>
-				Intervalul de timp: <input id="deltat"> s
+					Intensitate: <input id="intensitate"> A <br>
+					Sarcina electrică: <input id="Q"> C <br>
+					Intervalul de timp: <input id="deltat"> s
 
+				</div>
+				<div class="tab-pane fade" id="sarcinaElectrica" role="tabpanel" aria-labelledby="sarcinaElectrica-tab">
+
+					<h3>Sarcina electrică Q = n * E</h3>
+
+					Sarcina electrică: <input id="Q1"> C <br>
+					Numărul de electroni: <input id="nrelectroni"> <br>
+					e = 1.6 * 10<sup>-19</sup>
+
+				</div>
+				<div class="tab-pane fade" id="OhmPortiune" role="tabpanel" aria-labelledby="OhmPortiune-tab">
+
+					<h3>Legea lui Ohm pe porțiune de circuit I = U / R</h3>
+
+					Intensitate: <input id="intensitateOhm"> A <br>
+					Tensiunea electrică: <input id="U"> V <br>
+					Rezistența electrică a circuitului exterior: <input id="R"> &Omega;
+
+				</div>
+				<div class="tab-pane fade" id="scurtcircuit" role="tabpanel" aria-labelledby="scurtcircuit-tab">
+
+					<h3>Intensitatea de scurtcircuit I<sub>sc</sub> = E / r</h3>
+
+					Intensitatea de scurtcircuit: <input id="Intensitateasc"> A <br>
+					Tensiunea electromotoare: <input id="E"> V <br>
+					Rezistența electrică a circuitului interior: <input id="r"> &Omega;
+
+				</div>
+				<div class="tab-pane fade" id="putereaElectrica" role="tabpanel" aria-labelledby="putereaElectrica-tab">
+
+					<h3>Puterea electrică P = U * I</h3>
+
+					Puterea electrică: <input id="P"> W <br>
+					Tensiunea electrică: <input id="Putere-U"> V <br>
+					Intensitate: <input id="Putere-intensitate"> A
+
+				</div>
+				<div class="tab-pane fade" id="putereaTotala" role="tabpanel" aria-labelledby="putereaTotala-tab">
+
+					<h3>Puterea totală P<sub>t</sub> = E * I</h3>
+
+					Puterea totală: <input id="Pt"> W <br>
+					Tensiunea electromotoare: <input id="Puterea totala-E"> V <br>
+					Intensitate: <input id="Puterea totala-intensitate"> A
+
+				</div>
+				<div class="tab-pane fade" id="randament" role="tabpanel" aria-labelledby="randament-tab">
+
+					<h3>Randament &eta; = U / E</h3>
+
+					Randament: <input id="randament"><br>
+					Tensiunea electromotoare: <input id="randament-E"> V <br>
+					Tensiunea electrică: <input id="randament-U"> V
+
+				</div>
 			</div>
-			<div class="tab-pane fade" id="sarcinaElectrica" role="tabpanel" aria-labelledby="sarcinaElectrica-tab">
-
-				<h3>Sarcina electrică Q = n * E</h3>
-
-				Sarcina electrică: <input id="Q1"> C <br>
-				Numărul de electroni: <input id="nrelectroni"> <br>
-				e = 1.6 * 10<sup>-19</sup>
-
-			</div>
-			<div class="tab-pane fade" id="OhmPortiune" role="tabpanel" aria-labelledby="OhmPortiune-tab">
-
-				<h3>Legea lui Ohm pe porțiune de circuit I = U / R</h3>
-
-				Intensitate: <input id="intensitateOhm"> A <br>
-				Tensiunea electrică: <input id="U"> V <br>
-				Rezistența electrică a circuitului exterior: <input id="R"> &Omega;
-
-			</div>
-			<div class="tab-pane fade" id="scurtcircuit" role="tabpanel" aria-labelledby="scurtcircuit-tab">
-
-				<h3>Intensitatea de scurtcircuit I<sub>sc</sub> = E / r</h3>
-
-				Intensitatea de scurtcircuit: <input id="Intensitateasc"> A <br>
-				Tensiunea electromotoare: <input id="E"> V <br>
-				Rezistența electrică a circuitului interior: <input id="r"> &Omega;
-
-			</div>
-			<div class="tab-pane fade" id="putereaElectrica" role="tabpanel" aria-labelledby="putereaElectrica-tab">
-
-				<h3>Puterea electrică P = U * I</h3>
-
-				Puterea electrică: <input id="P"> W <br>
-            	Tensiunea electrică: <input id="Putere-U"> V <br>
-            	Intensitate: <input id="Putere-intensitate"> A
-
-			</div> 
-			<div class="tab-pane fade" id="putereaTotala" role="tabpanel" aria-labelledby="putereaTotala-tab">
-
-				<h3>Puterea totală P<sub>t</sub> = E * I</h3>
-
-				Puterea totală: <input id="Pt"> W <br>
-				Tensiunea electromotoare: <input id="Puterea totala-E"> V <br>
-				Intensitate: <input id="Puterea totala-intensitate"> A
-
-			</div> 
-			<div class="tab-pane fade" id="randament" role="tabpanel" aria-labelledby="randament-tab">
-
-				<h3>Randament &eta; = U / E</h3>	
-
-				Randament: <input id="randament"><br>
-				Tensiunea electromotoare: <input id="randament-E"> V <br>
-				Tensiunea electrică: <input id="randament-U"> V
-
-			</div> 
 		</div>
 	</div>
-
 </body>
 
 </html>
