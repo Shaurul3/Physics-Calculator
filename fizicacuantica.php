@@ -1,3 +1,9 @@
+<?php
+include("../connection.php") ?>
+
+<?php
+include("../connection.php") ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -24,39 +30,39 @@
 
 <body>
 
-	<!-- <div class="header">
-		<a href="../home.html" class="logo">Physics Calculator</a>
-		<div class="header-right">
-			<a class="active" href="../home.html">Home</a>
-			<a href="../contact.html">Contact</a>
-			<a href="../about.html">About</a>
-		</div>
-	</div> -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="../home.html" style="font-size: 30px;">Physics Calculator</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
+			<a class="navbar-brand" href="home.php" style="font-size: 30px;">Physics Calculator</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="../home.html">Home</a>
+						<a class="nav-link active" aria-current="page" href="home.php">Home</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Capitole
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="Mecanica.html">Mecanică</a></li>
-							<li><a class="dropdown-item" href="Electricitate.html">Electricitate</a></li>
-							<li><a class="dropdown-item" href="Termodinamica.html">Termodinamică</a></li>
-							<li><a class="dropdown-item" href="Optica.html">Optică</a></li>
-							<!-- <li><hr class="dropdown-divider"></li>
-				  <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+							<?php
+							// Assuming $conn is your SQL Server connection
+							$sql = "SELECT NumeRamura FROM Ramura";
+							$rezultat = sqlsrv_query($conn, $sql); // Use sqlsrv_query for SQL Server
+
+							if ($rezultat === false) {
+								die(print_r(sqlsrv_errors(), true)); // Check for SQL errors
+							}
+
+							while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
+								$numeRamura = $row['NumeRamura'];
+								$link = str_replace(' ', '', $numeRamura) . '.php'; // Generating the link based on the subject
+								echo '<li><a class="dropdown-item" href="' . $link . '">' . $numeRamura . '</a></li>';
+							}
+
+							sqlsrv_free_stmt($rezultat); // Free the statement resources
+							?>
 						</ul>
 					</li>
 					<li class="nav-item">
@@ -73,7 +79,6 @@
 			</div>
 		</div>
 	</nav>
-
 
 </body>
 

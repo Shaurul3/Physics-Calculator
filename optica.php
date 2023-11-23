@@ -24,7 +24,7 @@
 
 <body>
 
-	<!-- <div class="header">
+<!-- <div class="header">
 		<a href="../home.html" class="logo">Physics Calculator</a>
 		<div class="header-right">
 			<a class="active" href="../home.html">Home</a>
@@ -73,7 +73,6 @@
 			</div>
 		</div>
 	</nav>
-
 
 </body>
 
