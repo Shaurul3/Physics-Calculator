@@ -38,7 +38,7 @@ include("../connection.php") ?>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Capitole
+							Ramuri
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<?php
@@ -58,6 +58,19 @@ include("../connection.php") ?>
 
 							sqlsrv_free_stmt($rezultat); // Free the statement resources
 							?>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Tools
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
+						<a class="dropdown-item" href="fizician.php">Fizicieni</a>
+						<a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
+						<a class="dropdown-item" href="cautareAn.php">Filtrare avansată în funcție de an a fizicienilor</a>
+						<a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor pe rammuri</a>
+						<a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
 						</ul>
 					</li>
 					<li class="nav-item">
@@ -120,7 +133,7 @@ include("../connection.php") ?>
     				LEFT JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
 					LEFT JOIN Capitol C ON F.CapitolID = C.CapitolID
 					LEFT JOIN FizicianFundament FF ON F.FundamentID = FF.FundamentID
-					LEFT JOIN Fizician Fiz ON FF.FizicianID = FF.FizicianID";
+					LEFT JOIN Fizician Fiz ON Fiz.FizicianID = FF.FizicianID";
 
 			$stmt = sqlsrv_query($conn, $sql);
 

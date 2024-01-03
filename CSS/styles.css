@@ -4,5 +4,6 @@ body {
   height: 100vh;
 }
 
-/*CONTAINER*/
-.container{height: 100%;}
+h2 {
+    text-align: center;
+}

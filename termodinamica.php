@@ -37,7 +37,7 @@ include("../connection.php") ?>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Capitole
+							Ramuri
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<?php
@@ -57,6 +57,19 @@ include("../connection.php") ?>
 
 							sqlsrv_free_stmt($rezultat); // Free the statement resources
 							?>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Tools
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
+						<a class="dropdown-item" href="fizician.php">Fizicieni</a>
+						<a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
+						<a class="dropdown-item" href="cautareAn.php">Filtrare avansată în funcție de an a fizicienilor</a>
+						<a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor pe rammuri</a>
+						<a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
 						</ul>
 					</li>
 					<li class="nav-item">
@@ -95,13 +108,14 @@ include("../connection.php") ?>
 				$numeFundament = $row['NumeFundament'];
 				// Înlocuiește spațiile din numele fundației pentru a crea link-uri
 				$link = str_replace(' ', '', $numeFundament) . '.php';
-				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament)); // înlocuiește spațiile și parantezele cu _
+				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
 
 				echo '<li class="nav-item" role="presentation">';
 				echo '<button class="nav-link border-white" id="' . $idTab . '-tab" data-bs-toggle="tab" data-bs-target="#' . $idTab . '" type="button" role="tab" aria-controls="' . $idTab . '" aria-selected="false" style="font-size: calc(1rem + 1.5vw);">';
 				echo $numeFundament;
 				echo '</button>';
 				echo '</li>';
+
 			}
 
 			sqlsrv_free_stmt($rezultat);
@@ -116,10 +130,10 @@ include("../connection.php") ?>
 			// Interogare SQL pentru a obține toate numele și definițiile fundamentelor
 			$sql = "SELECT F.NumeFundament, F.DefinitieFundament, Fo.EcuatieFormula, Fo.UnitateMasura, C.NumeCapitol, F.AnAparitie, Fiz.NumeFizician, Fiz.PrenumeFizician
     				FROM Fundament F
-    				LEFT JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
+					LEFT JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
 					LEFT JOIN Capitol C ON F.CapitolID = C.CapitolID
 					LEFT JOIN FizicianFundament FF ON F.FundamentID = FF.FundamentID
-					LEFT JOIN Fizician Fiz ON FF.FizicianID = FF.FizicianID";
+					LEFT JOIN Fizician Fiz ON Fiz.FizicianID = FF.FizicianID";
 
 			$stmt = sqlsrv_query($conn, $sql);
 
@@ -128,8 +142,6 @@ include("../connection.php") ?>
 			}
 
 			// Array pentru a stoca toate formulele asociate aceluiași fundament
-			$formuleFundament = [];
-
 			while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
 				$numeFundament = $row['NumeFundament'];
 				$definitieFundament = $row['DefinitieFundament'];
@@ -139,53 +151,28 @@ include("../connection.php") ?>
 				$anAparitie = $row['AnAparitie'];
 				$numeFizician = $row['NumeFizician'];
 				$prenumeFizician = $row['PrenumeFizician'];
-
-				if (!isset($formuleFundament[$numeFundament])) {
-					$formuleFundament[$numeFundament] = [
-						'capitol' => $numeCapitol,
-						'definitie' => $definitieFundament,
-						'anAparitie' => $anAparitie,
-						'formule' => [],
-						'numeFizician' => $numeFizician,
-						'prenumeFizician' => $prenumeFizician,
-					];
-				}
-
-				if ($ecuatieFormula !== null && $unitateMasura !== null) {
-					$formuleFundament[$numeFundament]['formule'][] = [
-						'ecuatie' => $ecuatieFormula,
-						'unitate' => $unitateMasura,
-					];
-				}
-			}
-
-			foreach ($formuleFundament as $fundament => $info) {
-				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $fundament));
-
+			
+				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
+			
 				echo '<div class="tab-pane fade" id="' . $idTab . '" role="tabpanel" aria-labelledby="' . $idTab . '-tab">';
-				echo "<h3>{$info['capitol']} - $fundament";
-
-				// Verificare pentru existența anului de apariție
-				if (isset($info['anAparitie']) && !empty($info['anAparitie'])) {
-					echo " ({$info['anAparitie']})";
+				echo "<h3>{$numeCapitol} - {$numeFundament}";
+			
+				if (isset($anAparitie) && !empty($anAparitie)) {
+					echo " ({$anAparitie})";
 				}
-
+			
 				echo "</h3>";
-				echo "<p>{$info['definitie']}</p>";
-
-
-				if (count($info['formule']) > 0) {
-					foreach ($info['formule'] as $formula) {
-						echo "<p>$$" . $formula['ecuatie'] . "$$</p>";
-						echo "<p>Unitate de măsură: {$formula['unitate']}</p>";
-					}
+				echo "<p>{$definitieFundament}</p>";
+			
+				if ($ecuatieFormula !== null && $unitateMasura !== null) {
+					echo "<p>$$" . $ecuatieFormula . "$$</p>";
+					echo "<p>Unitate de măsură: {$unitateMasura}</p>";
 				} else {
 					echo "<p>Nu există formulă asociată acestui fundament.</p>";
 				}
-
-				// Verificare existență fizician asociat fundamentului
-				if (isset($info['numeFizician']) && isset($info['prenumeFizician'])) {
-					echo "<p>Fizician asociat: {$info['numeFizician']} {$info['prenumeFizician']}</p>";
+			
+				if (isset($numeFizician) && isset($prenumeFizician)) {
+					echo "<p>Fizician asociat: {$numeFizician} {$prenumeFizician}</p>";
 				}
 
 				echo '</div>';
@@ -196,7 +183,7 @@ include("../connection.php") ?>
 			sqlsrv_free_stmt($stmt);
 			// Închiderea conexiunii la baza de date după terminarea lucrului cu ea
 			?>
-			
+
 		</div>
 	</div>
 

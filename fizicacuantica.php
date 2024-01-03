@@ -40,7 +40,7 @@ include("../connection.php") ?>
 					</li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Capitole
+							Ramuri
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<?php
@@ -62,6 +62,19 @@ include("../connection.php") ?>
 							?>
 						</ul>
 					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Tools
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
+						<a class="dropdown-item" href="fizician.php">Fizicieni</a>
+						<a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
+						<a class="dropdown-item" href="cautareAn.php">Filtrare avansată în funcție de an a fizicienilor</a>
+						<a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor pe rammuri</a>
+						<a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
+						</ul>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Contact</a>
 					</li>
@@ -78,7 +91,7 @@ include("../connection.php") ?>
 	</nav>
 
 	<div class="container">
-		<ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist">
+	<ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist">
 			<?php
 			// Conexiunea la baza de date ar trebui să fie stabilită aici
 
@@ -113,7 +126,7 @@ include("../connection.php") ?>
 		</ul>
 
 		<div class="tab-content" id="myTabContent" style="background-color:white">
-		<?php
+			<?php
 			// Presupunând că ai deja o conexiune validă la baza de date
 
 			// Interogare SQL pentru a obține toate numele și definițiile fundamentelor
@@ -122,7 +135,7 @@ include("../connection.php") ?>
     				LEFT JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
 					LEFT JOIN Capitol C ON F.CapitolID = C.CapitolID
 					LEFT JOIN FizicianFundament FF ON F.FundamentID = FF.FundamentID
-					LEFT JOIN Fizician Fiz ON FF.FizicianID = FF.FizicianID";
+					LEFT JOIN Fizician Fiz ON Fiz.FizicianID = FF.FizicianID";
 
 			$stmt = sqlsrv_query($conn, $sql);
 
@@ -140,7 +153,7 @@ include("../connection.php") ?>
 				$numeFizician = $row['NumeFizician'];
 				$prenumeFizician = $row['PrenumeFizician'];
 			
-				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
+				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament)); // înlocuiește spațiile și parantezele cu _
 			
 				echo '<div class="tab-pane fade" id="' . $idTab . '" role="tabpanel" aria-labelledby="' . $idTab . '-tab">';
 				echo "<h3>$numeCapitol - $numeFundament" . (!empty($anAparitie) ? " ($anAparitie)" : "") . "</h3>";
