@@ -18,7 +18,6 @@ include("../connection.php") ?>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-
 	<title>Physics Calculator</title>
 
 </head>
@@ -88,11 +87,10 @@ include("../connection.php") ?>
 	<div class="container">
 		<ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist">
 			<?php
-			$sql = "SELECT F.NumeFundament 
-					FROM Fundament F
-					INNER JOIN Capitol C ON F.CapitolID = C.CapitolID
-        			INNER JOIN Ramura R ON C.RamuraID = R.RamuraID
-        			WHERE NumeRamura = 'Optica'";
+			$sql = "SELECT
+			R.NumeRamura
+			FROM 
+			Ramura R;";
 			$rezultat = sqlsrv_query($conn, $sql);
 
 			if ($rezultat === false) {
@@ -100,12 +98,12 @@ include("../connection.php") ?>
 			}
 
 			while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
-				$numeFundament = $row['NumeFundament'];
-				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
+				$numeRamura = $row['NumeRamura'];
+				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeRamura));
 
 				echo '<li class="nav-item" role="presentation">';
 				echo '<button class="nav-link border-white" id="' . $idTab . '-tab" data-bs-toggle="tab" data-bs-target="#' . $idTab . '" type="button" role="tab" aria-controls="' . $idTab . '" aria-selected="false" style="font-size: calc(1rem + 1.5vw);">';
-				echo $numeFundament;
+				echo $numeRamura;
 				echo '</button>';
 				echo '</li>';
 			}
@@ -116,12 +114,22 @@ include("../connection.php") ?>
 
 		<div class="tab-content" id="myTabContent" style="background-color:white">
 			<?php
-			$sql = "SELECT F.NumeFundament, F.DefinitieFundament, Fo.EcuatieFormula, Fo.UnitateMasura, C.NumeCapitol, F.AnAparitie, Fiz.NumeFizician, Fiz.PrenumeFizician
-			FROM Fundament F
-			LEFT JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
-			LEFT JOIN Capitol C ON F.CapitolID = C.CapitolID
-			LEFT JOIN FizicianFundament FF ON F.FundamentID = FF.FundamentID
-			LEFT JOIN Fizician Fiz ON Fiz.FizicianID = FF.FizicianID";
+			$sql = "SELECT
+			R.NumeRamura,
+			(
+				SELECT COUNT(*) 
+				FROM Fundament F 
+				INNER JOIN Capitol C ON F.CapitolID = C.CapitolID 
+				WHERE C.RamuraID = R.RamuraID AND F.TipFundament = 'Lege'
+			) AS NumarLegi,
+			(
+				SELECT COUNT(*) 
+				FROM Fundament F 
+				INNER JOIN Capitol C ON F.CapitolID = C.CapitolID 
+				WHERE C.RamuraID = R.RamuraID AND F.TipFundament = 'Teorie'
+			) AS NumarTeorii
+			FROM 
+			Ramura R;";
 
 			$stmt = sqlsrv_query($conn, $sql);
 
@@ -129,64 +137,18 @@ include("../connection.php") ?>
 				die(print_r(sqlsrv_errors(), true));
 			}
 
-			$fundamente = array();
 
 			while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-				$numeFundament = $row['NumeFundament'];
+				$numeRamura = $row['NumeRamura'];
+				$countLege = $row['NumarLegi'];
+				$countTeorie = $row['NumarTeorii'];
 
-				if (!isset($fundamente[$numeFundament])) {
-					$fundamente[$numeFundament] = array(
-						"detaliiFundament" => array(
-							"definitie" => $row['DefinitieFundament'],
-							"ecuatie" => $row['EcuatieFormula'],
-							"unitate" => $row['UnitateMasura'],
-							"anAparitie" => $row['AnAparitie']
-						),
-						"fizicieni" => array()
-					);
-				}
+				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeRamura));
 
-				if (!is_null($row['NumeFizician']) && !is_null($row['PrenumeFizician'])) {
-					$idFizician = $row['NumeFizician'] . '_' . $row['PrenumeFizician'];
-
-					if (!isset($fundamente[$numeFundament]["fizicieni"][$idFizician])) {
-						$fundamente[$numeFundament]["fizicieni"][$idFizician] = array(
-							'nume' => $row['NumeFizician'],
-							'prenume' => $row['PrenumeFizician']
-						);
-					}
-				}
-			}
-
-			foreach ($fundamente as $numeFundament => $detaliiFundament) {
-				$detalii = $detaliiFundament["detaliiFundament"];
-				$fizicieni = $detaliiFundament["fizicieni"];
-
-				$idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
 				echo '<div class="tab-pane fade" id="' . $idTab . '" role="tabpanel" aria-labelledby="' . $idTab . '-tab">';
-				echo "<h3>$numeFundament" . (!empty($detalii['anAparitie']) ? " (" . $detalii['anAparitie'] . ")" : "") . "</h3>";
-				echo "<p>" . $detalii['definitie'] . "</p>";
-
-				if (!is_null($detalii['ecuatie']) && !is_null($detalii['unitate'])) {
-					echo "<p>$$" . $detalii['ecuatie'] . "$$</p>";
-					echo "<p>Unitate de măsură: " . $detalii['unitate'] . "</p>";
-				} else {
-					echo "<p>Nu există formulă asociată acestui fundament.</p>";
-				}
-
-				if (!empty($fizicieni)) {
-					echo '<p>Fizicieni asociati: ';
-					$numFizicieni = count($fizicieni);
-					$counter = 0;
-					foreach ($fizicieni as $fizician) {
-						echo $fizician['nume'] . ' ' . $fizician['prenume'];
-						$counter++;
-						if ($counter !== $numFizicieni) {
-							echo ', ';
-						}
-					}
-					echo '</p>';
-				}
+				echo "<h3>$numeRamura</h3>";
+				echo "<p>Numar Legi: $countLege</p>";
+				echo "<p>Numar Teorie: $countTeorie</p>";
 
 				echo '</div>';
 			}
@@ -195,7 +157,6 @@ include("../connection.php") ?>
 			?>
 		</div>
 	</div>
-
 </body>
 
 </html>

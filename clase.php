@@ -43,48 +43,45 @@ include("../connection.php")
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <?php
-                            // Assuming $conn is your SQL Server connection
                             $sql = "SELECT NumeRamura FROM Ramura";
-                            $rezultat = sqlsrv_query($conn, $sql); // Use sqlsrv_query for SQL Server
+                            $rezultat = sqlsrv_query($conn, $sql);
 
                             if ($rezultat === false) {
-                                die(print_r(sqlsrv_errors(), true)); // Check for SQL errors
+                                die(print_r(sqlsrv_errors(), true));
                             }
 
                             while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
                                 $numeRamura = $row['NumeRamura'];
-                                $link = str_replace(' ', '', $numeRamura) . '.php'; // Generating the link based on the subject
+                                $link = str_replace(' ', '', $numeRamura) . '.php';
                                 echo '<li><a class="dropdown-item" href="' . $link . '">' . $numeRamura . '</a></li>';
                             }
 
-                            sqlsrv_free_stmt($rezultat); // Free the statement resources
+                            sqlsrv_free_stmt($rezultat);
                             ?>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Tools
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
-						<a class="dropdown-item" href="fizician.php">Fizicieni</a>
-						<a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
-						<a class="dropdown-item" href="cautareAn.php">Filtrare avansată în funcție de an a fizicienilor</a>
-						<a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor pe rammuri</a>
-						<a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
-						</ul>
-					</li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tools
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="capitole.php">Capitole</a>
+                            <a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
+                            <a class="dropdown-item" href="fizician.php">Fizicieni</a>
+                            <a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
+                            <a class="dropdown-item" href="cautareAn.php">Filtrare dupa an a fizicienilor</a>
+                            <a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor dupa ramuri</a>
+                            <a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
+                            <a class="dropdown-item" href="fundamenterecente.php">Cel mai recent fundament pentru fiecare ramura</a>
+                            <a class="dropdown-item" href="maxCapitole.php">Cel mai mare numar de capitole dintre ramuri</a>
+                            <a class="dropdown-item" href="nrLegiTeorii.php">Numar Legi/Teorii pentru fiecare ramura</a>
+                            <a class="dropdown-item" href="NoiFundament.php">Fizicienii celui mai recent fundament pe ramura</a>
+                        </ul>
                     </li>
-                    <!-- <li class="nav-item">
-				<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-			  </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.php">Contact</a>
+                    </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
             </div>
         </div>
     </nav>
@@ -92,7 +89,7 @@ include("../connection.php")
     <div class="container">
 
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 mt-3">
                 <input type="text" class="form-control" placeholder="Introduceți parametrul variabil" aria-label="Introduceti clasa" name="parametruVariabil">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Trimite</button>
             </div>
@@ -100,18 +97,15 @@ include("../connection.php")
 
         <ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist">
             <?php
-            // Verificare dacă parametrul variabil a fost trimis prin POST
+
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Verificare dacă parametrul variabil a fost trimis prin POST
+
                 $parametruVariabil = isset($_POST['parametruVariabil']) ? $_POST['parametruVariabil'] : null;
 
-                // Verificare dacă parametrul variabil este setat și nu este gol
                 if (isset($parametruVariabil) && !empty($parametruVariabil)) {
-                    // Evită SQL injection
+
                     $parametruVariabil = htmlspecialchars($parametruVariabil);
 
-
-                    // Prepararea și executarea interogării SQL pentru a obține Ramurile
                     $sql = "SELECT F.NumeFundament  
                             FROM Fundament F
                             INNER JOIN Capitol C ON F.CapitolID = C.CapitolID
@@ -123,12 +117,9 @@ include("../connection.php")
                         die(print_r(sqlsrv_errors(), true));
                     }
 
-                    // Generarea butoanelor pentru taburi în funcție de rezultatele interogării
                     while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
                         $numeFundament = $row['NumeFundament'];
-                        $link = str_replace(' ', '', $numeFundament) . '.php'; // Generarea link-ului în funcție de numele Ramurii
 
-                        // Crearea unui identificator unic pentru taburi
                         $idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
 
                         echo '<li class="nav-item" role="presentation">';
@@ -140,8 +131,7 @@ include("../connection.php")
 
                     sqlsrv_free_stmt($rezultat);
                 } else {
-                    // Afișează un mesaj pentru introducerile lipsite sau greșite
-                    echo '<p class="text-white">Vă rugăm introduceți clasa corect pentru a genera fundamentele.</p>';
+                    echo '<div class="text-light">Vă rugăm introduceți clasa corect pentru a genera fundamentele.</div>';
                 }
             }
 
@@ -150,15 +140,12 @@ include("../connection.php")
 
         <div class="tab-content" id="myTabContent" style="background-color:white">
             <?php
-            // Presupunând că ai deja o conexiune validă la baza de date
-
-            // Interogare SQL pentru a obține toate numele și definițiile fundamentelor
             $sql = "SELECT F.NumeFundament, F.DefinitieFundament, Fo.EcuatieFormula, Fo.UnitateMasura, C.NumeCapitol, F.AnAparitie, Fiz.NumeFizician, Fiz.PrenumeFizician
-    				FROM Fundament F
-    				INNER JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
-					INNER JOIN Capitol C ON F.CapitolID = C.CapitolID
-					INNER JOIN FizicianFundament FF ON F.FundamentID = FF.FundamentID
-					INNER JOIN Fizician Fiz ON FF.FizicianID = FF.FizicianID";
+        FROM Fundament F
+        LEFT JOIN Formula Fo ON F.FundamentID = Fo.FundamentID
+        LEFT JOIN Capitol C ON F.CapitolID = C.CapitolID
+        LEFT JOIN FizicianFundament FF ON F.FundamentID = FF.FundamentID
+        LEFT JOIN Fizician Fiz ON Fiz.FizicianID = FF.FizicianID";
 
             $stmt = sqlsrv_query($conn, $sql);
 
@@ -166,41 +153,70 @@ include("../connection.php")
                 die(print_r(sqlsrv_errors(), true));
             }
 
+            $fundamente = array();
+
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 $numeFundament = $row['NumeFundament'];
-                $definitieFundament = $row['DefinitieFundament'];
-                $ecuatieFormula = $row['EcuatieFormula'];
-                $unitateMasura = $row['UnitateMasura'];
-                $numeCapitol = $row['NumeCapitol'];
-                $anAparitie = $row['AnAparitie'];
-                $numeFizician = $row['NumeFizician'];
-                $prenumeFizician = $row['PrenumeFizician'];
+
+                if (!isset($fundamente[$numeFundament])) {
+                    $fundamente[$numeFundament] = array(
+                        "detaliiFundament" => array(
+                            "definitie" => $row['DefinitieFundament'],
+                            "ecuatie" => $row['EcuatieFormula'],
+                            "unitate" => $row['UnitateMasura'],
+                            "anAparitie" => $row['AnAparitie']
+                        ),
+                        "fizicieni" => array()
+                    );
+                }
+
+                if (!is_null($row['NumeFizician']) && !is_null($row['PrenumeFizician'])) {
+                    $idFizician = $row['NumeFizician'] . '_' . $row['PrenumeFizician'];
+
+                    if (!isset($fundamente[$numeFundament]["fizicieni"][$idFizician])) {
+                        $fundamente[$numeFundament]["fizicieni"][$idFizician] = array(
+                            'nume' => $row['NumeFizician'],
+                            'prenume' => $row['PrenumeFizician']
+                        );
+                    }
+                }
+            }
+
+            foreach ($fundamente as $numeFundament => $detaliiFundament) {
+                $detalii = $detaliiFundament["detaliiFundament"];
+                $fizicieni = $detaliiFundament["fizicieni"];
 
                 $idTab = strtolower(str_replace([' ', '(', ')'], '_', $numeFundament));
-
                 echo '<div class="tab-pane fade" id="' . $idTab . '" role="tabpanel" aria-labelledby="' . $idTab . '-tab">';
-                echo "<h3>$numeCapitol - $numeFundament" . (!empty($anAparitie) ? " ($anAparitie)" : "") . "</h3>";
-                echo "<p>$definitieFundament</p>";
+                echo "<h3>$numeFundament" . (!empty($detalii['anAparitie']) ? " (" . $detalii['anAparitie'] . ")" : "") . "</h3>";
+                echo "<p>" . $detalii['definitie'] . "</p>";
 
-                if (!is_null($ecuatieFormula) && !is_null($unitateMasura)) {
-                    echo "<p>$$$ecuatieFormula$$</p>";
-                    echo "<p>Unitate de măsură: $unitateMasura</p>";
+                if (!is_null($detalii['ecuatie']) && !is_null($detalii['unitate'])) {
+                    echo "<p>$$" . $detalii['ecuatie'] . "$$</p>";
+                    echo "<p>Unitate de măsură: " . $detalii['unitate'] . "</p>";
                 } else {
                     echo "<p>Nu există formulă asociată acestui fundament.</p>";
                 }
 
-                if (!is_null($numeFizician) && !is_null($prenumeFizician)) {
-                    echo "<p>Fizician asociat: $numeFizician $prenumeFizician</p>";
+                if (!empty($fizicieni)) {
+                    echo '<p>Fizicieni asociati: ';
+                    $numFizicieni = count($fizicieni);
+                    $counter = 0;
+                    foreach ($fizicieni as $fizician) {
+                        echo $fizician['nume'] . ' ' . $fizician['prenume'];
+                        $counter++;
+                        if ($counter !== $numFizicieni) {
+                            echo ', ';
+                        }
+                    }
+                    echo '</p>';
                 }
 
                 echo '</div>';
             }
 
-            // Eliberarea resurselor
             sqlsrv_free_stmt($stmt);
-            // Închiderea conexiunii la baza de date după terminarea lucrului cu ea
             ?>
-
         </div>
     </div>
 

@@ -91,29 +91,31 @@ include("../connection.php")
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <div class="input-group mb-3 mt-3">
                 <input type="text" class="form-control" placeholder="Introduceți parametrul variabil" aria-label="Introduceti clasa" name="parametruVariabil">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Trimite</button>
+                <button class="btn btn-dark" type="submit" id="button-addon2">Trimite</button>
             </div>
         </form>
 
         <ul class="nav nav-tabs bg-dark nav-fill" id="myTab" role="tablist">
             <?php
-
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
                 $parametruVariabil = isset($_POST['parametruVariabil']) ? $_POST['parametruVariabil'] : null;
 
                 if (isset($parametruVariabil) && !empty($parametruVariabil)) {
-
                     $parametruVariabil = htmlspecialchars($parametruVariabil);
 
-                    $sql = "SELECT DISTINCT fiz.NumeFizician, fiz.PrenumeFizician
-                    FROM Fizician fiz
-                    INNER JOIN FizicianFundament ff ON fiz.FizicianID = ff.FizicianID
-                    INNER JOIN Fundament fu ON ff.FundamentID = fu.FundamentID
-                    INNER JOIN Capitol c ON fu.CapitolID = c.CapitolID
-                    INNER JOIN Ramura r ON c.RamuraID = r.RamuraID
-                    WHERE r.NumeRamura LIKE ?
-                    ORDER BY fiz.NumeFizician, fiz.PrenumeFizician ASC";
+                    $sql = "SELECT DISTINCT F.NumeFizician, F.PrenumeFizician
+                    FROM Fizician F
+                    INNER JOIN FizicianFundament FF ON F.FizicianID = FF.FizicianID
+                    INNER JOIN Fundament Fu ON FF.FundamentID = Fu.FundamentID
+                    INNER JOIN Capitol C ON Fu.CapitolID = C.CapitolID
+                    INNER JOIN Ramura R ON C.RamuraID = R.RamuraID
+                    WHERE R.NumeRamura = ?
+                    AND Fu.AnAparitie = (
+                        SELECT MAX(Fu2.AnAparitie)
+                        FROM Fundament Fu2
+                        INNER JOIN Capitol Ca ON Fu2.CapitolID = Ca.CapitolID
+                        WHERE Ca.RamuraID = R.RamuraID
+                    );";
                     $params = array($parametruVariabil);
                     $rezultat = sqlsrv_query($conn, $sql, $params);
 
@@ -139,7 +141,7 @@ include("../connection.php")
 
                     sqlsrv_free_stmt($rezultat);
                 } else {
-                    echo '<p class="text-white">Vă rugăm introduceți corect o ramura pentru a afisa fizicienii.</p>';
+                    echo '<p class="text-white">Vă rugăm introduceți ramura corecta pentru a afisa fizicianul/fizicienii.</p>';
                 }
             }
 
@@ -148,20 +150,26 @@ include("../connection.php")
 
         <div class="tab-content" id="myTabContent" style="background-color:white">
             <?php
+
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $parametruVariabil = isset($_POST['parametruVariabil']) ? $_POST['parametruVariabil'] : null;
 
                 if (isset($parametruVariabil) && !empty($parametruVariabil)) {
                     $parametruVariabil = htmlspecialchars($parametruVariabil);
 
-                    $sql = "SELECT fiz.NumeFizician, fiz.PrenumeFizician, fu.NumeFundament, fu.DefinitieFundament
-                    FROM Fizician fiz
-                    INNER JOIN FizicianFundament ff ON fiz.FizicianID = ff.FizicianID
-                    INNER JOIN Fundament fu ON ff.FundamentID = fu.FundamentID
-                    INNER JOIN Capitol c ON fu.CapitolID = c.CapitolID
-                    INNER JOIN Ramura r ON c.RamuraID = r.RamuraID
-                    WHERE r.NumeRamura LIKE ?
-                    ORDER BY fiz.NumeFizician, fiz.PrenumeFizician ASC";
+                    $sql = "SELECT DISTINCT F.NumeFizician, F.PrenumeFizician
+                    FROM Fizician F
+                    INNER JOIN FizicianFundament FF ON F.FizicianID = FF.FizicianID
+                    INNER JOIN Fundament Fu ON FF.FundamentID = Fu.FundamentID
+                    INNER JOIN Capitol C ON Fu.CapitolID = C.CapitolID
+                    INNER JOIN Ramura R ON C.RamuraID = R.RamuraID
+                    WHERE R.NumeRamura = ?
+                    AND Fu.AnAparitie = (
+                        SELECT MAX(Fu2.AnAparitie)
+                        FROM Fundament Fu2
+                        INNER JOIN Capitol Ca ON Fu2.CapitolID = Ca.CapitolID
+                        WHERE Ca.RamuraID = R.RamuraID
+                    );";
                     $params = array($parametruVariabil);
                     $rezultat = sqlsrv_query($conn, $sql, $params);
 
@@ -171,38 +179,36 @@ include("../connection.php")
 
                     $index = 0;
 
-                    $fizicieni_si_fundamente = array();
+                    $fizicieni = array();
 
                     while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
                         $numeFizician = $row['NumeFizician'];
                         $prenumeFizician = $row['PrenumeFizician'];
-                        $numeFundament = $row['NumeFundament'];
-                        $definitieFundament = $row['DefinitieFundament'];
 
                         $numeComplet = $numeFizician . ' ' . $prenumeFizician;
 
-                        if (!isset($fizicieni_si_fundamente[$numeComplet])) {
-                            $fizicieni_si_fundamente[$numeComplet] = array();
+                        if (!isset($fizicieni[$numeComplet])) {
+                            $fizicieni[$numeComplet] = array();
                         }
 
-                        $fizicieni_si_fundamente[$numeComplet][] = array(
-                            "numeFundament" => $numeFundament,
-                            "definitieFundament" => $definitieFundament
+                        $fizicieni[$numeComplet][] = array(
+                            "numeFizician" => $numeFizician,
+                            "prenumeFizician" => $prenumeFizician
                         );
                     }
 
-                    foreach ($fizicieni_si_fundamente as $numeComplet => $fundamente) {
-                        $idTab = 'fizician_' . $index;
-                        echo '<div class="tab-pane fade" id="' . $idTab . '" role="tabpanel" aria-labelledby="' . $idTab . '-tab">';
-                        foreach ($fundamente as $fundament) {
-                            $numeFundament = $fundament['numeFundament'];
-                            $definitieFundament = $fundament['definitieFundament'];
-                            echo "<h3>$numeFundament</h3>";
-                            echo "<p>$definitieFundament</p>";
+                    foreach ($fizicieni as $numeComplet => $fundamente) {
+                        if (!empty($fizicieni)) {
+                            foreach ($fizicieni as $numeComplet => $fundamente) {
+                                $idTab = 'fizician_' . $index;
+                                echo '<div class="tab-pane fade" id="' . $idTab . '" role="tabpanel" aria-labelledby="' . $idTab . '-tab">';
+                                echo "<h2>$numeComplet</h2>";
+                                echo "</div>";
+                                $index++;
+                            }
                         }
-                        echo "</div>";
-                        $index++;
                     }
+
                     sqlsrv_free_stmt($rezultat);
                 }
             }

@@ -39,21 +39,20 @@ include("../connection.php") ?>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<?php
-							// Assuming $conn is your SQL Server connection
 							$sql = "SELECT NumeRamura FROM Ramura";
-							$rezultat = sqlsrv_query($conn, $sql); // Use sqlsrv_query for SQL Server
+							$rezultat = sqlsrv_query($conn, $sql);
 
 							if ($rezultat === false) {
-								die(print_r(sqlsrv_errors(), true)); // Check for SQL errors
+								die(print_r(sqlsrv_errors(), true));
 							}
 
 							while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
 								$numeRamura = $row['NumeRamura'];
-								$link = str_replace(' ', '', $numeRamura) . '.php'; // Generating the link based on the subject
+								$link = str_replace(' ', '', $numeRamura) . '.php';
 								echo '<li><a class="dropdown-item" href="' . $link . '">' . $numeRamura . '</a></li>';
 							}
 
-							sqlsrv_free_stmt($rezultat); // Free the statement resources
+							sqlsrv_free_stmt($rezultat);
 							?>
 						</ul>
 					</li>
@@ -62,25 +61,23 @@ include("../connection.php") ?>
 							Tools
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
-						<a class="dropdown-item" href="fizician.php">Fizicieni</a>
-						<a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
-						<a class="dropdown-item" href="cautareAn.php">Filtrare avansată în funcție de an a fizicienilor</a>
-						<a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor pe rammuri</a>
-						<a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
+							<a class="dropdown-item" href="capitole.php">Capitole</a>
+							<a class="dropdown-item" href="probleme.php">Probleme rezolvate</a>
+							<a class="dropdown-item" href="fizician.php">Fizicieni</a>
+							<a class="dropdown-item" href="clase.php">Filtrare pe clase a fundamentelor</a>
+							<a class="dropdown-item" href="cautareAn.php">Filtrare dupa an a fizicienilor</a>
+							<a class="dropdown-item" href="cautareRamura.php">Filtrare a fizicienilor dupa ramuri</a>
+							<a class="dropdown-item" href="cautareCapitol.php">Filtrare a fundamentelor pe capitole</a>
+							<a class="dropdown-item" href="fundamenterecente.php">Cel mai recent fundament pentru fiecare ramura</a>
+							<a class="dropdown-item" href="maxCapitole.php">Cel mai mare numar de capitole dintre ramuri</a>
+							<a class="dropdown-item" href="nrLegiTeorii.php">Numar Legi/Teorii pentru fiecare ramura</a>
+							<a class="dropdown-item" href="NoiFundament.php">Fizicienii celui mai recent fundament pe ramura</a>
 						</ul>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Contact</a>
+						<a class="nav-link" href="contact.php">Contact</a>
 					</li>
-					<!-- <li class="nav-item">
-				<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-			  </li> -->
 				</ul>
-				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
 			</div>
 		</div>
 	</nav>
@@ -88,17 +85,16 @@ include("../connection.php") ?>
 	<div class="container d-flex align-items-center justify-content-center">
 		<div class="row" style="background-color:#ffffff;">
 			<?php
-			// Assuming $conn is your SQL Server connection
 			$sql = "SELECT NumeRamura FROM Ramura";
 			$rezultat = sqlsrv_query($conn, $sql);
 
 			if ($rezultat === false) {
-				die(print_r(sqlsrv_errors(), true)); // Check for SQL errors
+				die(print_r(sqlsrv_errors(), true));
 			}
 
 			while ($row = sqlsrv_fetch_array($rezultat, SQLSRV_FETCH_ASSOC)) {
 				$numeRamura = $row['NumeRamura'];
-				$link = str_replace(' ', '', $numeRamura) . '.php'; // Generating the link based on the subject
+				$link = str_replace(' ', '', $numeRamura) . '.php';
 
 				$classes = 'col-lg-6 col-sm-12 btn btn-primary btn-dark btn-outline-light';
 				if ($numeRamura === 'Fizica Cuantica') {
@@ -111,119 +107,6 @@ include("../connection.php") ?>
 
 		</div>
 	</div>
-
-	<!--<div class="TabelFor" id="Mecanica">
-		<h2 style="text-align:center;"> Mecanică </h2>
-
-			<h3>Legea vitezei v = &Delta;d / &Delta;t</h3>
-			
-				Viteza: <input id="vitezacorp"> m/s <br>
-				Distanța: <input id="distantaparcursa"> m<br>
-				Timp: <input id="timpcorp"> s<br>
-
-			<h3>Densitatea &rho; = m / V</h3>
-
-				Densitatea: <input id="densitateacorpului"> Kg/m<sup>3</sup> <br>
-				Masa: <input id="masacorp"> Kg<br>
-				Volumul: <input id="volumcorp"> m<sup>3</sup> (1000L) <br>
-                         
-			<h3>Greutatea G = m / g</h3>
-
-				Greutatatea: <input id="greutatateacorpului"> N <br>
-				Masa: <input id="masaG"> Kg <br>
-				Accelerația gravitatională: <input id="accgravitationala"> m/s<sup>2</sup> <br>
-
-			<h3>Forța de frecare F<sub>f</sub> = &mu; * N</h3>
-
-				Forța de frecare: <input id="ffcorp"> N <br>
-				Normala la suprafata: <input id="normalaF"> N <br>
-				Coeficientul de frecare: <input id="cfcorp"> <br>
-
-			<h3>Forța elastică F<sub>e</sub> = -k * &Delta;l</h3>
-
-				Forța elastică: <input id="Fe"> N <br>
-				Alungirea barei: <input id="deltal"> m <br>
-				Constanta elastică: <input id="k"> N/m <br>
-
-		<br><br>
-		<button onclick="MECANICA();" id="buton1">Calculează</button>
-
-		<p id="rezultat"></p>
-		<p id="rezultat1"></p>
-		<p id="rezultat2"></p>
-		<p id="rezultat3"></p>
-		<p id="rezultat4"></p>
-
-
-
-	</div>
-
-
-	<br>
-
-
-	<div class="TabelFor" id="Electricitate">
-		<h2 style="text-align:center;"> Electricitate </h2>
-
-			<h3>Formula intensității I = Q / &Delta;t</h3>
-
-				Intensitate: <input id="intensitate"> A <br>
-				Sarcina electrică: <input id="Q"> C <br>
-				Intervalul de timp: <input id="deltat"> s <br>
-
-			<h3>Sarcina electrică Q = n * E</h3>
-
-				Sarcina electrică: <input id="Q1"> C <br>
-				Numărul de electroni: <input id="nrelectroni"> <br>
-				e = 1.6 * 10<sup>-19</sup>
-
-			<h3>Legea lui Ohm pe porțiune de circuit I = U / R</h3>
-
-				Intensitate: <input id="intensitateOhm"> A <br>
-				Tensiunea electrică: <input id="U"> V <br>
-				Rezistența electrică a circuitului exterior: <input id="R"> &Omega; <br>
-
-			<h3>Intensitatea de scurtcircuit I<sub>sc</sub> = E / r</h3>
-
-				Intensitatea de scurtcircuit: <input id="Intensitateasc"> A <br>
-				Tensiunea electromotoare: <input id="E"> V <br>
-				Rezistența electrică a circuitului interior: <input id="r"> &Omega; <br>
-
-			<h3>Puterea electrică P = U * I</h3>
-
-				Puterea electrică: <input id="P"> W <br>
-            	Tensiunea electrică: <input id="Putere-U"> V <br>
-            	Intensitate: <input id="Putere-intensitate"> A <br>
-
-			<h3>Puterea totală P<sub>t</sub> = E * I</h3>
-
-				Puterea totală: <input id="Pt"> W <br>
-				Tensiunea electromotoare: <input id="Puterea totala-E"> V <br>
-				Intensitate: <input id="Puterea totala-intensitate"> A <br>
-
-			<h3>Randament &eta; = U / E</h3>	
-
-				Randament: <input id="randament"><br>
-				Tensiunea electromotoare: <input id="randament-E"> V <br>
-				Tensiunea electrică: <input id="randament-U"> V <br>
-
-		<br><br>
-		<button onclick="ELECTRICITATE();" id="buton2">Calculează</button>
-
-				<p id="rezultat5"></p>
-				<p id="rezultat6"></p>
-				<p id="rezultat7"></p>
-				<p id="rezultat8"></p>
-				<p id="rezultat9"></p>
-				<p id="rezultat10"></p>
-				<p id="rezultat11"></p>
-
-			</div>-->
-
-	<br><br><br>
-
-
-
 </body>
 
 </html>
